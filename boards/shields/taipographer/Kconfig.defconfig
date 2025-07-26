@@ -1,0 +1,23 @@
+if SHIELD_TAIPOGRAPHER_LEFT
+
+    # Name must be less than 16 characters long!
+    config ZMK_KEYBOARD_NAME
+        default "Taipographer"
+
+    config ZMK_SPLIT_ROLE_CENTRAL
+        default y
+
+    config ZMK_USB
+        default y
+
+    endif
+
+if SHIELD_TAIPOGRAPHER_LEFT || SHIELD_TAIPOGRAPHER_RIGHT
+
+    config ZMK_BLE
+        default y
+
+    config ZMK_SPLIT
+        default y
+
+    endif
