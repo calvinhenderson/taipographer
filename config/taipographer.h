@@ -7,10 +7,10 @@
 #define BASE_LAYERS LINUX
 
 // TIMEOUTS
-#define TIMEOUT_SHORT 20
+#define TIMEOUT_SHORT 30
 #define TIMEOUT_NORMAL 50
-#define TIMEOUT_LONG 120
-#define TIMEOUT_XLONG 1500
+#define TIMEOUT_LONG 200
+#define TIMEOUT_XLONG 2500
 
 // Labels for switch directions according to the matrix
 
