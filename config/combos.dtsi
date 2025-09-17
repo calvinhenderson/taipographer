@@ -55,6 +55,15 @@
 BCOMBO(FN,        &mo FN,        L_FN_KEY,    R_FN_KEY)
 BCOMBO(NAV_SPACE, &lt NAV SPACE, L_SHIFT_KEY, R_SHIFT_KEY)
 
+BCOMBO(STENO,     &to 3, L_FN_KEY L_P_OT, R_FN_KEY R_P_OT)
+BCOMBO(GAMING,    &to 4, L_FN_KEY L_P_IT, R_FN_KEY R_P_IT)
+
+#undef COMBO_LAYERS
+#define COMBO_LAYERS 3 4
+
+BCOMBO(SBASE,     &to 0, L_FN_KEY L_P_OB, R_FN_KEY R_P_OB)
+BCOMBO(GBASE,     &to 0, L_FN_KEY L_P_IB, R_FN_KEY R_P_IB)
+
 // }}}
 // {{{ System
 
@@ -265,10 +274,10 @@ BCOMBO(RCLK, &mkp RCLK, L_I_OT, R_I_OT)
 BCOMBO(MCLK, &mkp MCLK, L_I_OT L_I_OB, R_I_OT R_I_OB)
 
 // Mouse movement
-BCOMBO(MMVL, &mmv MOVE_LEFT,  L_P_IT L_P_IB, R_P_IT R_P_IB)
+BCOMBO(MMVL, &mmv MOVE_LEFT,  L_P_IT L_P_IB, R_I_IT R_I_IB)
 BCOMBO(MMVU, &mmv MOVE_UP,    L_R__T L_R__B, R_R__T R_R__B)
 BCOMBO(MMVD, &mmv MOVE_DOWN,  L_M__T L_M__B, R_M__T R_M__B)
-BCOMBO(MMVR, &mmv MOVE_RIGHT, L_I_IT L_I_IB, R_I_IT R_I_IB)
+BCOMBO(MMVR, &mmv MOVE_RIGHT, L_I_IT L_I_IB, R_P_IT R_P_IB)
 
 // Scrolling (inverted to counter natural scrolling prefs)
 BCOMBO(MSCL, &msc SCRL_LEFT,  L_P_IT L_R__T, R_P_IT R_R__T)

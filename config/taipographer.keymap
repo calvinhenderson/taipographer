@@ -47,9 +47,7 @@
     compatible = "zmk,keymap";
 
     /* We define layers here, but they are all unassigned.
-     * Instead, I choose to use combos for assigning keys
-     * with the exception of imu behavior since it is
-     * source-specific.
+     * Instead, I choose to use combos for assigning keys.
      */
     linux {
       display-name = "linux";
@@ -86,6 +84,32 @@
 
         &none      &kp HOME   &kp PGDN   &kp PGUP   &kp END    &none     
         &none      &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &none     
+        &none      &none      &none     
+      >;
+    };
+
+    qwerty_steno {
+      display-name = "steno";
+      bindings = <
+        &kp 1 &kp Q &kp W &kp E &kp R &kp T
+        &kp 2 &kp A &kp S &kp D &kp F &kp G
+        /*             */ &kp 3 &kp C &kp V
+
+        &kp Y &kp U &kp I &kp O &kp P &kp LBKT
+        &kp H &kp J &kp K &kp L &kp SEMI &kp SQT
+        &kp N &kp M &kp 3
+      >;
+    };
+
+    gaming {
+      display-name = "gaming";
+      bindings = <
+        &kp F1     &kp LALT   &kp C      &kp W      &kp R      &kp Y     
+        &kp ESC    &kp LCTL   &kp A      &kp S      &kp D      &kp G     
+        /*                            */ &kp LSHFT  &kp E      &kp SPACE 
+
+        &none      &none      &none      &none      &none      &none     
+        &none      &none      &none      &none      &none      &none     
         &none      &none      &none     
       >;
     };
