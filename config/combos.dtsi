@@ -23,11 +23,13 @@
     layers = <COMBO_LAYERS>;          \
   };
 
+#define MCOMBO(MOD_NAME, NAME, BINDINGS, MOD_BINDINGS, MOD_KEY, KEYPOS) \
+  COMBO(MOD_NAME, MOD_BINDINGS, MOD_KEY KEYPOS) \
+  COMBO(NAME, BINDINGS, KEYPOS)
+
 #define WITH_MOD(MOD_NAME, NAME, BINDINGS, MOD_BINDINGS, L_MOD_KEY, LEFT_KEYPOS, R_MOD_KEY, RIGHT_KEYPOS) \
-  COMBO(l_##NAME, BINDINGS, LEFT_KEYPOS) \
-  COMBO(r_##NAME, BINDINGS, RIGHT_KEYPOS) \
-  COMBO(l_##MOD_NAME, MOD_BINDINGS, L_MOD_KEY LEFT_KEYPOS) \
-  COMBO(r_##MOD_NAME, MOD_BINDINGS, R_MOD_KEY RIGHT_KEYPOS)
+  MCOMBO(l_##MOD_NAME, l_##NAME, BINDINGS, MOD_BINDINGS, L_MOD_KEY, LEFT_KEYPOS) \
+  MCOMBO(r_##MOD_NAME, r_##NAME, BINDINGS, MOD_BINDINGS, R_MOD_KEY, RIGHT_KEYPOS)
 
 // }}}
 // {{{ Configuration
@@ -55,14 +57,14 @@
 BCOMBO(FN,        &mo FN,        L_FN_KEY,    R_FN_KEY)
 BCOMBO(NAV_SPACE, &lt NAV SPACE, L_SHIFT_KEY, R_SHIFT_KEY)
 
-BCOMBO(STENO,     &to 3, L_FN_KEY L_P_OT, R_FN_KEY R_P_OT)
-BCOMBO(GAMING,    &to 4, L_FN_KEY L_P_IT, R_FN_KEY R_P_IT)
+BCOMBO(STENO,     &to STENO,  L_FN_KEY L_P_OT, R_FN_KEY R_P_OT)
+BCOMBO(QWERTY,    &to QWERTY, L_FN_KEY L_P_IT, R_FN_KEY R_P_IT)
 
 #undef COMBO_LAYERS
-#define COMBO_LAYERS 3 4
+#define COMBO_LAYERS STENO QWERTY
 
-BCOMBO(SBASE,     &to 0, L_FN_KEY L_P_OB, R_FN_KEY R_P_OB)
-BCOMBO(GBASE,     &to 0, L_FN_KEY L_P_IB, R_FN_KEY R_P_IB)
+BCOMBO(SBASE,     &to TAIPO, L_FN_KEY L_P_OB, R_FN_KEY R_P_OB)
+BCOMBO(QBASE,     &to TAIPO, L_FN_KEY L_P_IB, R_FN_KEY R_P_IB)
 
 // }}}
 // {{{ System
@@ -107,12 +109,6 @@ BCOMBO(BT_CLR, &bt BT_CLR,   L_M__B L_I_IB, R_I_IB R_M__B)
 BCOMBO(BSPC,   &kp BSPC,     L_BSPC_KEY, R_BSPC_KEY)
 BCOMBO(WBSPC,  &kp LC(BSPC), L_SHIFT_KEY L_BSPC_KEY, R_SHIFT_KEY R_BSPC_KEY)
 
-BCOMBO(HYPER,  &sm HYPER HYPER, L_I_OT L_I_OB, R_I_OT R_I_OB)
-BCOMBO(LSHFT,  &sm LSHFT LSHFT, L_P_IT L_P_IB, R_P_IT R_P_IB)
-BCOMBO(LALT,   &sm LALT LALT,   L_R__T L_R__B, R_R__T R_R__B)
-BCOMBO(LCTRL,  &sm LCTRL LCTRL, L_M__T L_M__B, R_M__T R_M__B)
-BCOMBO(LGUI,   &sm LGUI LGUI,   L_I_IT L_I_IB, R_I_IT R_I_IB)
-
 BCOMBO(TAB,    &kp TAB,                  L_R__T L_M__T L_I_IT,             R_I_IT R_M__T R_R__T)
 BCOMBO(DEL,    &kp DEL,      L_SHIFT_KEY L_R__T L_M__T L_I_IT, R_SHIFT_KEY R_I_IT R_M__T R_R__T)
 BCOMBO(WDEL,   &kp LC(DEL),  L_SHIFT_KEY L_BSPC_KEY L_R__T L_M__T L_I_IT, R_SHIFT_KEY L_BSPC_KEY R_I_IT R_M__T R_R__T)
@@ -120,38 +116,97 @@ BCOMBO(WDEL,   &kp LC(DEL),  L_SHIFT_KEY L_BSPC_KEY L_R__T L_M__T L_I_IT, R_SHIF
 BCOMBO(ENTER,  &kp ENTER,                L_R__B L_M__B L_I_IB,             R_I_IB R_M__B R_R__B)
 BCOMBO(ESC,    &kp ESC,      L_SHIFT_KEY L_R__B L_M__B L_I_IB, R_SHIFT_KEY R_I_IB R_M__B R_R__B)
 
+// Home-row mods are different
+
+#undef COMBO_LAYERS
+#define COMBO_LAYERS TAIPO
+BCOMBO(T_LSHFT,  &sm LSHFT LSHFT, L_P_IT L_P_IB, R_P_IT R_P_IB)
+BCOMBO(T_LALT,   &sm LALT  LALT,  L_R__T L_R__B, R_R__T R_R__B)
+BCOMBO(T_LCTRL,  &sm LCTRL LCTRL, L_M__T L_M__B, R_M__T R_M__B)
+BCOMBO(T_LGUI,   &sm LGUI  LGUI,  L_I_IT L_I_IB, R_I_IT R_I_IB)
+BCOMBO(T_HYPER,  &sm HYPER HYPER, L_I_OT L_I_OB, R_I_OT R_I_OB)
+
+#undef COMBO_LAYERS
+#define COMBO_LAYERS QWERTY
+// Left-half
+COMBO(Q_L_LSHFT, &mt LSHFT A,    L_P_IT L_P_IB)
+COMBO(Q_L_LALT,  &mt LALT  S,    L_R__T L_R__B)
+COMBO(Q_L_LCTRL, &mt LCTRL D,    L_M__T L_M__B)
+COMBO(Q_L_LGUI,  &mt LGUI  F,    L_I_IT L_I_IB)
+COMBO(Q_L_HYPER, &mt HYPER G,    L_I_OT L_I_OB)
+// Right-half
+COMBO(Q_R_HYPER, &mt HYPER H,    R_I_OT R_I_OB)
+COMBO(Q_R_LGUI,  &mt LGUI  J,    R_I_IT R_I_IB)
+COMBO(Q_R_LCTRL, &mt LCTRL K,    R_M__T R_M__B)
+COMBO(Q_R_LALT,  &mt LALT  L,    R_R__T R_R__B)
+COMBO(Q_R_LSHFT, &mt LSHFT SEMI, R_P_IT R_P_IB)
+
 // }}}
 // {{{ Alphas
 
 #undef COMBO_LAYERS
+#define COMBO_LAYERS TAIPO
+
+WITH_MOD(T_S_R, T_R, &kp R, &kp LS(R), L_SHIFT_KEY, L_P_IT,        R_SHIFT_KEY, R_P_IT)
+WITH_MOD(T_S_S, T_S, &kp S, &kp LS(S), L_SHIFT_KEY, L_R__T,        R_SHIFT_KEY, R_R__T)
+WITH_MOD(T_S_N, T_N, &kp N, &kp LS(N), L_SHIFT_KEY, L_M__T,        R_SHIFT_KEY, R_M__T)
+WITH_MOD(T_S_I, T_I, &kp I, &kp LS(I), L_SHIFT_KEY, L_I_IT,        R_SHIFT_KEY, R_I_IT)
+WITH_MOD(T_S_A, T_A, &kp A, &kp LS(A), L_SHIFT_KEY, L_P_IB,        R_SHIFT_KEY, R_P_IB)
+WITH_MOD(T_S_O, T_O, &kp O, &kp LS(O), L_SHIFT_KEY, L_R__B,        R_SHIFT_KEY, R_R__B)
+WITH_MOD(T_S_T, T_T, &kp T, &kp LS(T), L_SHIFT_KEY, L_M__B,        R_SHIFT_KEY, R_M__B)
+WITH_MOD(T_S_E, T_E, &kp E, &kp LS(E), L_SHIFT_KEY, L_I_IB,        R_SHIFT_KEY, R_I_IB)
+WITH_MOD(T_S_B, T_B, &kp B, &kp LS(B), L_SHIFT_KEY, L_P_IT L_R__T, R_SHIFT_KEY, R_R__T R_P_IT)
+WITH_MOD(T_S_Y, T_Y, &kp Y, &kp LS(Y), L_SHIFT_KEY, L_M__T L_I_IT, R_SHIFT_KEY, R_I_IT R_M__T)
+WITH_MOD(T_S_L, T_L, &kp L, &kp LS(L), L_SHIFT_KEY, L_P_IB L_R__B, R_SHIFT_KEY, R_R__B R_P_IB)
+WITH_MOD(T_S_H, T_H, &kp H, &kp LS(H), L_SHIFT_KEY, L_M__B L_I_IB, R_SHIFT_KEY, R_I_IB R_M__B)
+WITH_MOD(T_S_P, T_P, &kp P, &kp LS(P), L_SHIFT_KEY, L_R__T L_M__T, R_SHIFT_KEY, R_M__T R_R__T)
+WITH_MOD(T_S_U, T_U, &kp U, &kp LS(U), L_SHIFT_KEY, L_R__B L_M__B, R_SHIFT_KEY, R_M__B R_R__B)
+WITH_MOD(T_S_G, T_G, &kp G, &kp LS(G), L_SHIFT_KEY, L_P_IT L_I_IT, R_SHIFT_KEY, R_I_IT R_P_IT)
+WITH_MOD(T_S_D, T_D, &kp D, &kp LS(D), L_SHIFT_KEY, L_P_IB L_I_IB, R_SHIFT_KEY, R_I_IB R_P_IB)
+WITH_MOD(T_S_Z, T_Z, &kp Z, &kp LS(Z), L_SHIFT_KEY, L_P_IT L_M__T, R_SHIFT_KEY, R_M__T R_P_IT)
+WITH_MOD(T_S_F, T_F, &kp F, &kp LS(F), L_SHIFT_KEY, L_R__T L_I_IT, R_SHIFT_KEY, R_I_IT R_R__T)
+WITH_MOD(T_S_Q, T_Q, &kp Q, &kp LS(Q), L_SHIFT_KEY, L_P_IB L_M__B, R_SHIFT_KEY, R_M__B R_P_IB)
+WITH_MOD(T_S_C, T_C, &kp C, &kp LS(C), L_SHIFT_KEY, L_R__B L_I_IB, R_SHIFT_KEY, R_I_IB R_R__B)
+WITH_MOD(T_S_X, T_X, &kp X, &kp LS(X), L_SHIFT_KEY, L_P_IT L_M__B, R_SHIFT_KEY, R_M__B R_P_IT)
+WITH_MOD(T_S_K, T_K, &kp K, &kp LS(K), L_SHIFT_KEY, L_R__B L_I_IT, R_SHIFT_KEY, R_I_IT R_R__B)
+WITH_MOD(T_S_V, T_V, &kp V, &kp LS(V), L_SHIFT_KEY, L_R__T L_I_IB, R_SHIFT_KEY, R_I_IB R_R__T)
+WITH_MOD(T_S_J, T_J, &kp J, &kp LS(J), L_SHIFT_KEY, L_P_IB L_M__T, R_SHIFT_KEY, R_M__T R_P_IB)
+WITH_MOD(T_S_M, T_M, &kp M, &kp LS(M), L_SHIFT_KEY, L_P_IT L_I_IB, R_SHIFT_KEY, R_I_IB R_P_IT)
+WITH_MOD(T_S_W, T_W, &kp W, &kp LS(W), L_SHIFT_KEY, L_P_IB L_I_IT, R_SHIFT_KEY, R_I_IT R_P_IB)
+
+#undef COMBO_LAYERS
 #define COMBO_LAYERS BASE_LAYERS
 
-WITH_MOD(S_R, R, &kp R, &kp LS(R), L_SHIFT_KEY, L_P_IT,        R_SHIFT_KEY, R_P_IT)
-WITH_MOD(S_S, S, &kp S, &kp LS(S), L_SHIFT_KEY, L_R__T,        R_SHIFT_KEY, R_R__T)
-WITH_MOD(S_N, N, &kp N, &kp LS(N), L_SHIFT_KEY, L_M__T,        R_SHIFT_KEY, R_M__T)
-WITH_MOD(S_I, I, &kp I, &kp LS(I), L_SHIFT_KEY, L_I_IT,        R_SHIFT_KEY, R_I_IT)
-WITH_MOD(S_A, A, &kp A, &kp LS(A), L_SHIFT_KEY, L_P_IB,        R_SHIFT_KEY, R_P_IB)
-WITH_MOD(S_O, O, &kp O, &kp LS(O), L_SHIFT_KEY, L_R__B,        R_SHIFT_KEY, R_R__B)
-WITH_MOD(S_T, T, &kp T, &kp LS(T), L_SHIFT_KEY, L_M__B,        R_SHIFT_KEY, R_M__B)
-WITH_MOD(S_E, E, &kp E, &kp LS(E), L_SHIFT_KEY, L_I_IB,        R_SHIFT_KEY, R_I_IB)
-WITH_MOD(S_B, B, &kp B, &kp LS(B), L_SHIFT_KEY, L_P_IT L_R__T, R_SHIFT_KEY, R_R__T R_P_IT)
-WITH_MOD(S_Y, Y, &kp Y, &kp LS(Y), L_SHIFT_KEY, L_M__T L_I_IT, R_SHIFT_KEY, R_I_IT R_M__T)
-WITH_MOD(S_L, L, &kp L, &kp LS(L), L_SHIFT_KEY, L_P_IB L_R__B, R_SHIFT_KEY, R_R__B R_P_IB)
-WITH_MOD(S_H, H, &kp H, &kp LS(H), L_SHIFT_KEY, L_M__B L_I_IB, R_SHIFT_KEY, R_I_IB R_M__B)
-WITH_MOD(S_P, P, &kp P, &kp LS(P), L_SHIFT_KEY, L_R__T L_M__T, R_SHIFT_KEY, R_M__T R_R__T)
-WITH_MOD(S_U, U, &kp U, &kp LS(U), L_SHIFT_KEY, L_R__B L_M__B, R_SHIFT_KEY, R_M__B R_R__B)
-WITH_MOD(S_G, G, &kp G, &kp LS(G), L_SHIFT_KEY, L_P_IT L_I_IT, R_SHIFT_KEY, R_I_IT R_P_IT)
-WITH_MOD(S_D, D, &kp D, &kp LS(D), L_SHIFT_KEY, L_P_IB L_I_IB, R_SHIFT_KEY, R_I_IB R_P_IB)
-WITH_MOD(S_Z, Z, &kp Z, &kp LS(Z), L_SHIFT_KEY, L_P_IT L_M__T, R_SHIFT_KEY, R_M__T R_P_IT)
-WITH_MOD(S_F, F, &kp F, &kp LS(F), L_SHIFT_KEY, L_R__T L_I_IT, R_SHIFT_KEY, R_I_IT R_R__T)
-WITH_MOD(S_Q, Q, &kp Q, &kp LS(Q), L_SHIFT_KEY, L_P_IB L_M__B, R_SHIFT_KEY, R_M__B R_P_IB)
-WITH_MOD(S_C, C, &kp C, &kp LS(C), L_SHIFT_KEY, L_R__B L_I_IB, R_SHIFT_KEY, R_I_IB R_R__B)
-WITH_MOD(S_X, X, &kp X, &kp LS(X), L_SHIFT_KEY, L_P_IT L_M__B, R_SHIFT_KEY, R_M__B R_P_IT)
-WITH_MOD(S_K, K, &kp K, &kp LS(K), L_SHIFT_KEY, L_R__B L_I_IT, R_SHIFT_KEY, R_I_IT R_R__B)
-WITH_MOD(S_V, V, &kp V, &kp LS(V), L_SHIFT_KEY, L_R__T L_I_IB, R_SHIFT_KEY, R_I_IB R_R__T)
-WITH_MOD(S_J, J, &kp J, &kp LS(J), L_SHIFT_KEY, L_P_IB L_M__T, R_SHIFT_KEY, R_M__T R_P_IB)
-WITH_MOD(S_M, M, &kp M, &kp LS(M), L_SHIFT_KEY, L_P_IT L_I_IB, R_SHIFT_KEY, R_I_IB R_P_IT)
-WITH_MOD(S_W, W, &kp W, &kp LS(W), L_SHIFT_KEY, L_P_IB L_I_IT, R_SHIFT_KEY, R_I_IT R_P_IB)
+MCOMBO(Q_S_Q,    Q_Q,    &kp Q,    &kp LS(Q),    L_SHIFT_KEY, L_P_IT)
+MCOMBO(Q_S_W,    Q_W,    &kp W,    &kp LS(W),    L_SHIFT_KEY, L_R__T)
+MCOMBO(Q_S_E,    Q_E,    &kp E,    &kp LS(E),    L_SHIFT_KEY, L_M__T)
+MCOMBO(Q_S_R,    Q_R,    &kp R,    &kp LS(R),    L_SHIFT_KEY, L_I_IT)
+MCOMBO(Q_S_T,    Q_T,    &kp T,    &kp LS(T),    L_SHIFT_KEY, L_I_OT)
+MCOMBO(Q_S_Y,    Q_Y,    &kp Y,    &kp LS(Y),    R_SHIFT_KEY, R_I_OT)
+MCOMBO(Q_S_U,    Q_U,    &kp U,    &kp LS(U),    R_SHIFT_KEY, R_I_IT)
+MCOMBO(Q_S_I,    Q_I,    &kp I,    &kp LS(I),    R_SHIFT_KEY, R_M__T)
+MCOMBO(Q_S_O,    Q_O,    &kp O,    &kp LS(O),    R_SHIFT_KEY, R_R__T)
+MCOMBO(Q_S_P,    Q_P,    &kp P,    &kp LS(P),    R_SHIFT_KEY, R_P_IT)
+MCOMBO(Q_S_A,    Q_A,    &kp A,    &kp LS(A),    L_SHIFT_KEY, L_P_IT L_P_IB)
+MCOMBO(Q_S_S,    Q_S,    &kp S,    &kp LS(S),    L_SHIFT_KEY, L_R__T L_R__B)
+MCOMBO(Q_S_D,    Q_D,    &kp D,    &kp LS(D),    L_SHIFT_KEY, L_M__T L_M__B)
+MCOMBO(Q_S_F,    Q_F,    &kp F,    &kp LS(F),    L_SHIFT_KEY, L_I_IT L_I_IB)
+MCOMBO(Q_S_G,    Q_G,    &kp G,    &kp LS(G),    L_SHIFT_KEY, L_I_OT L_I_OB)
+MCOMBO(Q_S_H,    Q_H,    &kp H,    &kp LS(H),    R_SHIFT_KEY, R_I_OT R_I_OB)
+MCOMBO(Q_S_J,    Q_J,    &kp J,    &kp LS(J),    R_SHIFT_KEY, R_I_IT R_I_IB)
+MCOMBO(Q_S_K,    Q_K,    &kp K,    &kp LS(K),    R_SHIFT_KEY, R_M__T R_M__B)
+MCOMBO(Q_S_L,    Q_L,    &kp L,    &kp LS(L),    R_SHIFT_KEY, R_R__T R_R__B)
+MCOMBO(Q_S_SCLN, Q_SCLN, &kp SCLN, &kp LS(SCLN), R_SHIFT_KEY, R_P_IT R_P_IB)
+MCOMBO(Q_S_Z,    Q_Z,    &kp Z,    &kp LS(Z),    L_SHIFT_KEY, L_P_IB)
+MCOMBO(Q_S_X,    Q_X,    &kp X,    &kp LS(X),    L_SHIFT_KEY, L_R__B)
+MCOMBO(Q_S_C,    Q_C,    &kp C,    &kp LS(C),    L_SHIFT_KEY, L_M__B)
+MCOMBO(Q_S_V,    Q_V,    &kp V,    &kp LS(V),    L_SHIFT_KEY, L_I_IB)
+MCOMBO(Q_S_B,    Q_B,    &kp B,    &kp LS(B),    L_SHIFT_KEY, L_I_OB)
+MCOMBO(Q_S_N,    Q_N,    &kp N,    &kp LS(N),    R_SHIFT_KEY, R_I_OB)
+MCOMBO(Q_S_M,    Q_M,    &kp M,    &kp LS(M),    R_SHIFT_KEY, R_I_IB)
+MCOMBO(Q_S_COMMA,Q_COMMA,&kp COMMA,&kp LS(COMMA),R_SHIFT_KEY, R_M__B)
+MCOMBO(Q_S_DOT,  Q_DOT,  &kp DOT,  &kp LS(DOT),  R_SHIFT_KEY, R_R__B)
+MCOMBO(Q_S_FSLH, Q_FSLH, &kp FSLH, &kp LS(FSLH), R_SHIFT_KEY, R_P_IB)
 
 // }}}
 // {{{ Symbols

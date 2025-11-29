@@ -1,10 +1,12 @@
 #pragma once
 
 // LAYERS
-#define LINUX 0
-#define NAV 1
-#define FN 2
-#define BASE_LAYERS LINUX
+#define TAIPO 0
+#define QWERTY 1
+#define NAV 2
+#define FN 3
+#define STENO 4
+#define BASE_LAYERS TAIPO QWERTY
 
 // TIMEOUTS
 #define TIMEOUT_SHORT 30
