@@ -1,0 +1,93 @@
+compatible = "azoteq,iqs5xx";
+reg = <0x74>;
+
+rdy-gpios = <&pro_micro 21 (GPIO_ACTIVE_HIGH)>;
+reset-gpios = <&pro_micro 20 GPIO_ACTIVE_LOW>;
+
+/*
+one-finger-tap;
+press-and-hold;
+press-and-hold-time = <300>;
+two-finger-tap;
+*/
+
+scroll;
+natural-scroll-y;
+
+x-res = <500>;
+y-res = <500>;
+
+finger-split-factor = <3>;
+stationary-threshold = <10>;
+bottom-beta = <2>;
+
+set-active-rx-tx-channels {
+  // Tx0: ________ __XXXX__
+  // Tx1: ________ _XXXXXX_
+  // Tx2: ________ XXXXXXXX
+  // Tx3: ________ XXXXXXXX
+  // Tx4: ________ XXXXXXXX
+  // Tx5: ________ XXXXXXXX
+  // Tx6: ________ _XXXXXX_
+  // Tx7: ________ __XXXX__
+  // Tx_: ________ ________
+  // TxE: ________ ________
+
+  cmd = [
+    06 7B
+    00 3C 00 7E 00 FF 00 FF 00 FF
+    00 FF 00 7E 00 3C 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00
+  ];
+};
+
+set-rx-tx-matrix {
+  // Total Rx Total Tx
+  // Rx Order
+  // Tx Order
+
+  cmd = [
+    06 3D
+    08 08
+    00 01 02 03 04 05 06 07 08 09
+    00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E
+  ];
+};
+
+disable-rx-to-tx {
+  cmd = [06 5D 00];
+};
+
+global-ati-comp {
+  cmd = [05 6B 04];
+};
+
+global-ati-target {
+  cmd = [05 6D 02 BC];
+};
+
+prox-lpprox-thresholds {
+  cmd = [05 94 0A 06]; 
+};
+
+touch-set-clear-thresholds {
+  cmd = [05 96 0A 08];
+};
+
+reati-drift-limit {
+  cmd = [05 71 32];
+};
+
+reati-comp-limit {
+  cmd = [05 73 00 FF];
+};
+
+reati-min-count-delta {
+  cmd = [06 2E 64];
+};
+
+scroll-dist-angle {
+  // allow roughly 41º of freedom in
+  // deviation from primary scroll axis.
+  cmd = [06 CA 38];
+};

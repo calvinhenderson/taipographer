@@ -2,11 +2,11 @@
 
 // LAYERS
 #define TAIPO 0
-#define QWERTY 1
+#define MOUSE 1
 #define NAV 2
 #define FN 3
 #define STENO 4
-#define BASE_LAYERS TAIPO QWERTY
+#define BASE_LAYERS TAIPO
 
 // TIMEOUTS
 #define TIMEOUT_SHORT 30

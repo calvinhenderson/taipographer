@@ -57,15 +57,6 @@
 BCOMBO(FN,        &mo FN,        L_FN_KEY,    R_FN_KEY)
 BCOMBO(NAV_SPACE, &lt NAV SPACE, L_SHIFT_KEY, R_SHIFT_KEY)
 
-BCOMBO(STENO,     &to STENO,  L_FN_KEY L_P_OT, R_FN_KEY R_P_OT)
-BCOMBO(QWERTY,    &to QWERTY, L_FN_KEY L_P_IT, R_FN_KEY R_P_IT)
-
-#undef COMBO_LAYERS
-#define COMBO_LAYERS STENO QWERTY
-
-BCOMBO(SBASE,     &to TAIPO, L_FN_KEY L_P_OB, R_FN_KEY R_P_OB)
-BCOMBO(QBASE,     &to TAIPO, L_FN_KEY L_P_IB, R_FN_KEY R_P_IB)
-
 // }}}
 // {{{ System
 
@@ -73,17 +64,17 @@ BCOMBO(QBASE,     &to TAIPO, L_FN_KEY L_P_IB, R_FN_KEY R_P_IB)
 #define COMBO_LAYERS BASE_LAYERS
 
 // Hardware
-BCOMBO(RESET,  &sys_reset,   L_P_OT L_P_IT L_I_IT L_I_OT \
-                             L_P_OB L_P_IB L_I_IB L_I_OB,\
-                             R_I_OT R_I_IT R_P_IT R_P_OT \
-                             R_I_OB R_I_IB R_P_IB R_P_OB)
+BCOMBO(RESET,  &sys_reset,   L_P_OT L_I_OT \
+                             L_P_OB L_I_OB,\
+                             R_I_OT R_P_OT \
+                             R_I_OB R_P_OB)
 
 BCOMBO(BOOT,   &bootloader,  L_FN_KEY \
-                             L_P_OT L_P_IT L_I_IT L_I_OT \
-                             L_P_OB L_P_IB L_I_IB L_I_OB,\
+                             L_P_OT L_I_OT \
+                             L_P_OB L_I_OB,\
                              R_FN_KEY \
-                             R_I_OT R_I_IT R_P_IT R_P_OT \
-                             R_I_OB R_I_IB R_P_IB R_P_OB)
+                             R_I_OT R_P_OT \
+                             R_I_OB R_P_OB)
 
 #undef COMBO_LAYERS
 #define COMBO_LAYERS FN
@@ -125,21 +116,6 @@ BCOMBO(T_LALT,   &sm LALT  LALT,  L_R__T L_R__B, R_R__T R_R__B)
 BCOMBO(T_LCTRL,  &sm LCTRL LCTRL, L_M__T L_M__B, R_M__T R_M__B)
 BCOMBO(T_LGUI,   &sm LGUI  LGUI,  L_I_IT L_I_IB, R_I_IT R_I_IB)
 BCOMBO(T_HYPER,  &sm HYPER HYPER, L_I_OT L_I_OB, R_I_OT R_I_OB)
-
-#undef COMBO_LAYERS
-#define COMBO_LAYERS QWERTY
-// Left-half
-COMBO(Q_L_LSHFT, &mt LSHFT A,    L_P_IT L_P_IB)
-COMBO(Q_L_LALT,  &mt LALT  S,    L_R__T L_R__B)
-COMBO(Q_L_LCTRL, &mt LCTRL D,    L_M__T L_M__B)
-COMBO(Q_L_LGUI,  &mt LGUI  F,    L_I_IT L_I_IB)
-COMBO(Q_L_HYPER, &mt HYPER G,    L_I_OT L_I_OB)
-// Right-half
-COMBO(Q_R_HYPER, &mt HYPER H,    R_I_OT R_I_OB)
-COMBO(Q_R_LGUI,  &mt LGUI  J,    R_I_IT R_I_IB)
-COMBO(Q_R_LCTRL, &mt LCTRL K,    R_M__T R_M__B)
-COMBO(Q_R_LALT,  &mt LALT  L,    R_R__T R_R__B)
-COMBO(Q_R_LSHFT, &mt LSHFT SEMI, R_P_IT R_P_IB)
 
 // }}}
 // {{{ Alphas
